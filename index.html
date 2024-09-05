@@ -63,7 +63,7 @@
             continuousWorld: false,
             worldCopyJump: false, 
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[61.41123941494006,-130.76780931746603],[61.47921299497545,-130.56449347065757]]);
+        })
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -110,6 +110,9 @@
         document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
         }
         map.createPane('pane_local_DEM_wgs_0');
         map.getPane('pane_local_DEM_wgs_0').style.zIndex = 400;
@@ -225,7 +228,8 @@
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['FLOWN'] !== null ? autolinker.link(feature.properties['FLOWN'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">FLOWN</th>\
+                        <td class="visible-with-data" id="FLOWN">' + (feature.properties['FLOWN'] !== null ? autolinker.link(feature.properties['FLOWN'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -241,7 +245,7 @@
                     return {
                 pane: 'pane_Bowl_lines_QaQc_3',
                 opacity: 1,
-                color: 'rgba(71,200,125,1.0)',
+                color: 'rgba(71,200,125,0.596078431372549)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
@@ -254,7 +258,7 @@
                     return {
                 pane: 'pane_Bowl_lines_QaQc_3',
                 opacity: 1,
-                color: 'rgba(0,0,0,1.0)',
+                color: 'rgba(0,0,0,0.34901960784313724)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
